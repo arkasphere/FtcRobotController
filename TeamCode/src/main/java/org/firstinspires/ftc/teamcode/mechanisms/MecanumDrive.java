@@ -18,16 +18,16 @@ public class MecanumDrive {
 
     public void init(HardwareMap hwMap) {
         //initialize hwMap/bind to robot config
-        leftFront = hwMap.get(DcMotor.class, "leftFront");
-        leftRear = hwMap.get(DcMotor.class, "leftRear");
-        rightFront = hwMap.get(DcMotor.class, "rightFront");
-        rightRear = hwMap.get(DcMotor.class, "rightRear");
+        leftFront = hwMap.get(DcMotor.class, "frontLeft");
+        leftRear = hwMap.get(DcMotor.class, "backLeft");
+        rightFront = hwMap.get(DcMotor.class, "frontRight");
+        rightRear = hwMap.get(DcMotor.class, "backRight");
 
 //      mirror motors
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
 //      set motor stop type to brake
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -35,7 +35,7 @@ public class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//      run motors using encoder rather than setpos
+//      run motors using encoder rather than setpos TO PREVENT COMPOUNDING SPEED!!!
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
