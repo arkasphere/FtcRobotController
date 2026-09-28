@@ -18,10 +18,10 @@ public class MecanumDrive {
 
     public void init(HardwareMap hwMap) {
         //initialize hwMap/bind to robot config
-        leftFront = hwMap.get(DcMotor.class, "leftFront");
-        leftRear = hwMap.get(DcMotor.class, "leftRear");
-        rightFront = hwMap.get(DcMotor.class, "rightFront");
-        rightRear = hwMap.get(DcMotor.class, "rightRear");
+        leftFront = hwMap.get(DcMotor.class, "frontLeft");
+        leftRear = hwMap.get(DcMotor.class, "backLeft");
+        rightFront = hwMap.get(DcMotor.class, "frontRight");
+        rightRear = hwMap.get(DcMotor.class, "backRight");
 
 //      mirror motors
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -42,12 +42,6 @@ public class MecanumDrive {
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //      bind IMU/ set robot orientation
         imu = hwMap.get(IMU.class, "imu");
-
-        RevHubOrientationOnRobot RevOrient = new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
-                RevHubOrientationOnRobot.UsbFacingDirection.UP);
-
-        imu.initialize(new IMU.Parameters(RevOrient));
     }
     public void drive(double forward, double strafe, double yaw, double maxSpeed) {
         double leftFrontPower = forward + strafe + yaw;
@@ -66,17 +60,5 @@ public class MecanumDrive {
         leftRear.setPower(maxSpeed * leftRearPower / maxPower);
         rightFront.setPower(maxSpeed * rightFrontPower / maxPower);
         rightRear.setPower(maxSpeed * rightRearPower / maxPower);
-    }
-    public void driveFieldRelative(double forward, double strafe, double yaw, double maxSpeed) {
-        double theta = Math.atan2(forward, strafe);
-        double r = Math.hypot(forward, strafe);
-
-        theta = AngleUnit.normalizeRadians(theta -
-                imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
-
-        double newForward = r * Math.sin(theta);
-        double newStrafe = r * Math.cos(theta);
-
-        this.drive(newForward, newStrafe, yaw, maxSpeed);
     }
 }

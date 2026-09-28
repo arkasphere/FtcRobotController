@@ -25,10 +25,6 @@ public class MecDriveOpMode extends OpMode {
         yaw = gamepad1.right_stick_x;
         fieldRelativeDrive = gamepad1.y;
         maxSpeed = 1.0;
-
-        if (fieldRelativeDrive) {
-            drive.driveFieldRelative(forward, strafe, yaw, maxSpeed);
         }
     }
-}
 

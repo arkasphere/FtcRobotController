@@ -15,10 +15,6 @@ public class ServoAngle {
                 out = 0;
             }
         }
-        else {
-            out = input;
-        }
-
         if (input > 300) {
             if  (input <=330) {
                 out = 300;
@@ -26,6 +22,9 @@ public class ServoAngle {
             if (input >330) {
                 out = 0;
             }
+        }
+        else {
+            out = input;
         }
         return out;
     }
